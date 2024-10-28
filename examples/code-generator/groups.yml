@@ -1,0 +1,140 @@
+# groups.yaml
+
+defaults: &group_defaults
+  auto_devops_enabled: false
+  avatar: ""
+  avatar_hash: ""
+  default_branch: "main"
+  default_branch_protection_defaults:
+    allow_force_push: false
+    allowed_to_merge: []
+    allowed_to_push: []
+    developer_can_initial_push: false
+  description: "Default description"
+  emails_enabled: true
+  extra_shared_runners_minutes_limit: 0
+  ip_restriction_ranges: []
+  lfs_enabled: true
+  membership_lock: false
+  mentions_disabled: false
+  permanently_remove_on_delete: false
+  prevent_forking_outside_group: false
+  project_creation_level: "developer"
+  push_rules:
+    author_email_regex: ""
+    branch_name_regex: ""
+    commit_committer_check: false
+    commit_committer_name_check: false
+    commit_message_negative_regex: ""
+    commit_message_regex: ""
+    deny_delete_tag: false
+    file_name_regex: ""
+    max_file_size: null
+    member_check: false
+    prevent_secrets: true
+    reject_non_dco_commits: false
+    reject_unsigned_commits: false
+  request_access_enabled: true
+  require_two_factor_authentication: false
+  share_with_group_lock: false
+  shared_runners_setting: "enabled"
+  subgroup_creation_level: "maintainer"
+  two_factor_grace_period: 48
+  visibility_level: "private"
+  wiki_access_level: "enabled"
+
+groups:
+  # Level 0 groups - NOTE: ALL level 0 groups must be created via Gitlab UI first
+  # then imported using:
+  # terraform/tofu import [-var-file=<*.tfvars>] module.glab_groups_0.gitlab_group.group["<group_name>"]
+  - level: 0
+    key: "devops"
+    name: "devops"
+    path: "devops"
+    attributes:
+      <<: *group_defaults  # Merge in default attributes
+      description: "Root group for Aleph Codes"
+
+  - level: 0
+    key: "engineering"
+    name: "Engineering"
+    path: "engineering"
+    attributes:
+      <<: *group_defaults
+      description: "Engineering Department"
+
+  # Level 1 groups under "devops"
+  - level: 1
+    key: "devops/terraform-projects"
+    name: "Terraform Projects"
+    path: "terraform-projects"
+    parent_key: "devops"
+    attributes:
+      <<: *group_defaults
+      description: "Terraform projects group implementing infrastructure state"
+
+  # Level 1 groups under "devops/terraform-shared"
+  - level: 1
+    key: "devops/terraform-shared"
+    name: "Terraform shared"
+    path: "terraform-shared"
+    parent_key: "devops"
+    attributes:
+      <<: *group_defaults
+      description: "Terraform modules group shared across terraform-projects"
+
+  - level: 1
+    key: "engineering/devops"
+    name: "DevOps"
+    path: "devops"
+    parent_key: "engineering"
+    attributes:
+      <<: *group_defaults
+      description: "DevOps team for managing CI/CD pipelines"
+
+  # Level 2 groups under "devops/terraform-projects"
+  - level: 2
+    key: "devops/terraform-projects/glab"
+    name: "Terraform glab project"
+    path: "glab"
+    parent_key: "devops/terraform-projects"
+    attributes:
+      <<: *group_defaults
+      description: "Terraform project group for glab"
+
+  - level: 2
+    key: "devops/terraform-shared/components"
+    name: "Terraform shared components"
+    path: "components"
+    parent_key: "devops/terraform-shared"
+    attributes:
+      <<: *group_defaults
+      description: "Terraform component modules group shared across terraform-projects"
+
+  - level: 2
+    key: "devops/terraform-shared/resources"
+    name: "Terraform shared resources"
+    path: "resources"
+    parent_key: "devops/terraform-shared"
+    attributes:
+      <<: *group_defaults
+      description: "Terraform resource modules group shared across terraform-projects"
+
+  # Level 3 groups under "devops/terraform-shared/components"
+  - level: 3
+    key: "devops/terraform-shared/components/frontend"
+    name: "Frontend Components"
+    path: "frontend"
+    parent_key: "devops/terraform-shared/components"
+    attributes:
+      <<: *group_defaults
+      description: "Frontend component modules"
+
+  - level: 3
+    key: "devops/terraform-shared/components/backend"
+    name: "Backend Components"
+    path: "backend"
+    parent_key: "devops/terraform-shared/components"
+    attributes:
+      <<: *group_defaults
+      description: "Backend component modules"

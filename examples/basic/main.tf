@@ -3,12 +3,12 @@ locals {
 }
 
 module "gitlab_group_module_dev" {
-  source = "../modules/gitlab-group-module"
+  source = "../../modules/gitlab-group-module"
   groups = {
     dev = {
       auto_devops_enabled               = false
       default_branch_protection         = 2
-      emails_disabled                   = false
+      emails_enabled                   = true
       lfs_enabled                       = true
       mentions_disabled                 = false
       name                              = "dev1"
@@ -26,7 +26,7 @@ module "gitlab_group_module_dev" {
 }
 
 module "gitlab_group_module_components" {
-  source = "../modules/gitlab-group-module"
+  source = "../../modules/gitlab-group-module"
   groups = {
     frontend = {
       name      = "Frontend"
@@ -42,7 +42,7 @@ module "gitlab_group_module_components" {
 }
 
 module "gitlab_project_module" {
-  source = "../modules/gitlab-project-module"
+  source = "../../modules/gitlab-project-module"
   projects = {
     react_example_project = {
       name         = "React example project"
@@ -63,7 +63,7 @@ module "gitlab_project_module" {
 }
 
 module "gitlab_user_module" {
-  source   = "../modules/gitlab-user-module"
+  source   = "../../modules/gitlab-user-module"
   groups   = local.created_groups
   projects = module.gitlab_project_module.created_projects
   users = {
