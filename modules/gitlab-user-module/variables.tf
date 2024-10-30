@@ -1,23 +1,29 @@
 variable "users" {
   description = "Map for list of users with groups and projects membership"
   type = map(object({
-    create            = optional(bool)
-    username          = string
     email             = string
     name              = string
-    password          = optional(string)
+    username          = string
+
+    create            = optional(bool)
     can_create_group  = optional(bool)
+    extern_uid = optional(string)
+    external_provider = optional(string)
     is_admin          = optional(bool)
     is_external       = optional(bool)
+    namespace_id = optional(number)
     note              = optional(string)
+    password          = optional(string)
     projects_limit    = optional(number)
     reset_password    = optional(bool)
     skip_confirmation = optional(bool)
     state             = optional(string)
+    
     groups = map(object({
       access_level = string
       expires_at   = optional(string) #format: YYYY-MM-DD
     }))
+    
     projects = optional(map(object({
       access_level = string
     })))

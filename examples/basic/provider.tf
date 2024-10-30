@@ -1,5 +1,7 @@
+# provider.tf
+
 terraform {
-  required_version = ">=1.3"
+  required_version = ">= 1.5"
 
   required_providers {
     gitlab = {
@@ -7,4 +9,8 @@ terraform {
       version = "~> 17.5"
     }
   }
+}
+
+provider "gitlab" {
+  token = var.gitlab_token
 }

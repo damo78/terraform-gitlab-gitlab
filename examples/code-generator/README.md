@@ -7,6 +7,9 @@ Note: that any level 0 group, i.e. root level group, cannot be created by terraf
 
 ## Usage
 
+The example provided sets some basic defaults as an example and works for most use cases.  Note that the extended available attributes offered by the provider and this project may have some issues if not used in alignment with current Gitlab API quirks, [Issue 6317](https://gitlab.com/gitlab-org/terraform-provider-gitlab/-/issues/6317).
+
+
 ### Generate groups
 ```bash
 pip install -r requirements.txt

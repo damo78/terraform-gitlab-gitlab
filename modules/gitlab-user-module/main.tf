@@ -35,11 +35,14 @@ resource "gitlab_user" "user" {
   username = each.value.username
 
   # optional
-  password          = lookup(each.value, "password", null)
   can_create_group  = lookup(each.value, "can_create_group", false)
+  extern_uid        = lookup(each.value, "extern_uid", null)
+  external_provider = lookup(each.value, "external_provider", null)
   is_admin          = lookup(each.value, "is_admin", false)
   is_external       = lookup(each.value, "is_external", false)
+  namespace_id      = lookup(each.value, "namespace_id", null)
   note              = lookup(each.value, "note", "")
+  password          = lookup(each.value, "password", null) 
   projects_limit    = lookup(each.value, "projects_limit", 0)
   reset_password    = lookup(each.value, "reset_password", false)
   skip_confirmation = lookup(each.value, "skip_confirmation", true)

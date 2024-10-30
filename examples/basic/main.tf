@@ -8,7 +8,7 @@ module "gitlab_group_module_dev" {
     dev = {
       auto_devops_enabled               = false
       default_branch_protection         = 2
-      emails_enabled                   = true
+      emails_enabled                    = true
       lfs_enabled                       = true
       mentions_disabled                 = false
       name                              = "dev1"
